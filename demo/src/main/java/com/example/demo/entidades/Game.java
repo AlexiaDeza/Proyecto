@@ -37,4 +37,13 @@ public class Game {
     public void setJugador2(Jugador jugador2) {
         this.jugador2 = jugador2;
     }
+
+    public boolean TerminaJuego(){
+        if(jugador1.EsGanador()==true || jugador2.EsGanador()==true ){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 }

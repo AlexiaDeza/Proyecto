@@ -1,0 +1,8 @@
+h1 {
+	color: "red";
+}
+
+#grilla, .subgrilla {
+	border-style: solid;
+  border-width: medium;
+}

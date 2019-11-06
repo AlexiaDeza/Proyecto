@@ -12,13 +12,25 @@ public class Jugador{
     private ArrayList<Disparos> dispaross;
     private int aciertos;
     private Game gamee;
+    private ArrayList<String> posicionesDeBaja;
+    private int disparosFallados;
 
-    public Jugador(HashSet<Barco> barquitos, String nombrex, ArrayList<Disparos> disp,int aciertosx, Game gameex){
+    public Jugador(HashSet<Barco> barquitos, String nombrex, ArrayList<Disparos> disp,int aciertosx, Game gameex, ArrayList<String> posicionesDeBajax,int disparosFalladosx){
         Barcos=barquitos;
         nombre=nombrex;
         dispaross=disp;
         aciertos=aciertosx;
         gamee=gameex;
+        posicionesDeBaja=posicionesDeBajax;
+        disparosFallados=disparosFalladosx;
+    }
+
+    public int getDisparosFallados() {
+        return disparosFallados;
+    }
+
+    public ArrayList<String> getPosicionesDeBaja() {
+        return posicionesDeBaja;
     }
 
     public String getNombre() {
@@ -45,8 +57,16 @@ public class Jugador{
         this.nombre = nombre;
     }
 
+    public void setDisparosFallados(int disparosFallados) {
+        this.disparosFallados = disparosFallados;
+    }
+
     public void setBarcos(HashSet<Barco> barcos) {
         Barcos = barcos;
+    }
+
+    public void setPosicionesDeBaja(ArrayList<String> posicionesDeBaja) {
+        this.posicionesDeBaja = posicionesDeBaja;
     }
 
     public void setGamee(Game gamee) {
@@ -60,6 +80,7 @@ public class Jugador{
     public void setDispaross(ArrayList<Disparos> dispaross) {
         this.dispaross = dispaross;
     }
+
     public Jugador jugadorContrario(){
         if(gamee.getJugador1().getNombre() !=nombre){
             return gamee.getJugador1();
@@ -76,6 +97,7 @@ public class Jugador{
         }
         return p;
     }
+
     public ArrayList<String> disparitos(){
         ArrayList<String> d=new ArrayList<>();
         for(int i=0;i<dispaross.size();i++){
@@ -99,8 +121,25 @@ public class Jugador{
         }
     }
 
+    public void PosicionesGolpeadas(){
+        for(Barco b : Barcos){
+            for(String p: b.getPosiciones()){
+               if(jugadorContrario().disparitos().contains(p)){
+                   posicionesDeBaja.add(p);
+                   int aciertosActualesOp = jugadorContrario().getAciertos();
+                   jugadorContrario().setAciertos(aciertosActualesOp++);
+               }
+            }
+        }
+    }
 
-
+    public boolean BarcosOK(){
+        int pos=0;
+        for(Barco b : Barcos){
+        pos=b.getPosiciones().size()+pos;
+        }
+        return  pos == 21;
+    }
 
 
 }
